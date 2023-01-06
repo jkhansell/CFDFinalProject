@@ -1,4 +1,3 @@
 meshstudy/meshsweep2500steps
 meshstudy/meshsweep3000steps
-
-*__pycache__/
+meshstudy/__pycache__
