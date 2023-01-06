@@ -11,5 +11,5 @@ python3 runcase.py  --scheme   "steady"                   \
                     --rho      1.18                       \
                     --nsteps   4000                       \
                     --airfoil  "./airfoils/NRELs826.txt"  \
-                    --savepath "../runs/NRELs826/"        \
+                    --savepath "../runs/"                      \
                     --meshcontrols "meshcontrols/Mesh2.json"  \

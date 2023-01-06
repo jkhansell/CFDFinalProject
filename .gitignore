@@ -1,4 +1,7 @@
 meshstudy/meshsweep2500steps
 meshstudy/meshsweep3000steps
+meshstudy/meshsweep*
+meshstudy/runs*
 *__pycache__/
 *.ipynb_checkpoints
+*.code-workspace
