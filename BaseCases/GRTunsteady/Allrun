@@ -1,0 +1,31 @@
+#!/bin/sh
+
+#runs as: Allrun AoA 
+
+# clean Folder for new run 
+
+bash ./Allclean
+
+# Run python GMSH script to build mesh and edit patches
+
+python3 airfoilmesh.py --AoA $1 --airfoil $2
+gmshToFoam ./mesh/airfoil.msh 
+tr '\n' '@' < constant/polyMesh/boundary | sed 's/\bpatch\b/empty/1' | sed 's/\bpatch\b/wall/2' | sed 's/\bpatch\b/wall/7' | tr '@' '\n' > temp && mv temp constant/polyMesh/boundary
+
+#checkMesh > mesh.log
+# set 
+
+
+# divide domain for parallel execution
+decomposePar
+
+# parallel execution
+mpirun -np 4 simpleFoam -parallel
+
+reconstructPar 
+postProcess -func sampleObjectPatch
+
+
+
+
+

@@ -1,0 +1,19 @@
+{
+    "name": "Mesh9",
+    "generalMesh": 
+    {
+        "setSize": 0.001,
+        "SizeMin": 0.0125,
+        "SizeMax": 0.75,
+        "DistMin": 0.6, 
+        "DistMax": 12
+    }, 
+    
+    "boundaryLayer": 
+    {
+        "Size": 0.001, 
+        "Ratio": 1.1, 
+        "Thickness": 0.025, 
+        "NElements": 15
+    }
+}

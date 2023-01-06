@@ -1,0 +1,15 @@
+#!/bin/bash
+
+python3 runcase.py  --scheme   "steady"                   \
+                    --Reynolds 1e5                        \
+                    --Tu       0.94                       \
+                    --nu       1.1516e-5                  \
+                    --nuratio  0.1                        \
+                    --aoa      8.                         \
+                    --c        1                          \
+                    --s        0.001                      \
+                    --rho      1.18                       \
+                    --nsteps   4000                       \
+                    --airfoil  "./airfoils/NRELs826.txt"  \
+                    --savepath "../runs/NRELs826/"        \
+                    --meshcontrols "meshcontrols/Mesh2.json"  \
