@@ -2,7 +2,7 @@
     "name": "Mesh14",
     "generalMesh": 
     {
-        "setSize": 0.0004,
+        "setSize": 0.0005,
         "SizeMin": 0.005,
         "SizeMax": 0.45,
         "DistMin": 0.7, 

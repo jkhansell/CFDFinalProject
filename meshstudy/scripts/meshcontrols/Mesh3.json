@@ -2,7 +2,7 @@
     "name": "Mesh3",
     "generalMesh": 
     {
-        "setSize": 0.001,
+        "setSize": 0.0018,
         "SizeMin": 0.01,
         "SizeMax": 0.725,
         "DistMin": 0.7, 

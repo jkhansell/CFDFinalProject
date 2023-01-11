@@ -2,10 +2,10 @@
     "name": "Mesh11",
     "generalMesh": 
     {
-        "setSize": 0.001,
-        "SizeMin": 0.01,
-        "SizeMax": 0.7,
-        "DistMin": 0.65, 
+        "setSize": 0.0008,
+        "SizeMin": 0.007,
+        "SizeMax": 0.6,
+        "DistMin": 0.6, 
         "DistMax": 12
     }, 
     

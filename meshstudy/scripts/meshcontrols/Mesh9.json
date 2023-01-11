@@ -2,10 +2,10 @@
     "name": "Mesh9",
     "generalMesh": 
     {
-        "setSize": 0.001,
+        "setSize": 0.000105,
         "SizeMin": 0.0125,
-        "SizeMax": 0.75,
-        "DistMin": 0.6, 
+        "SizeMax": 0.65,
+        "DistMin": 0.55, 
         "DistMax": 12
     }, 
     
