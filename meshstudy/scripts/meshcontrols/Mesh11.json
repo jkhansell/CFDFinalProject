@@ -11,9 +11,9 @@
     
     "boundaryLayer": 
     {
-        "Size": 0.001, 
+        "Size": 0.0008, 
         "Ratio": 1.1, 
         "Thickness": 0.025, 
-        "NElements": 15
+        "NElements": 50
     }
 }

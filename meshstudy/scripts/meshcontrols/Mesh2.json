@@ -2,10 +2,10 @@
     "name": "Mesh2",
     "generalMesh": 
     {
-        "setSize": 0.003,
-        "SizeMin": 0.03,
-        "SizeMax": 1,
-        "DistMin": 0.5, 
+        "setSize": 0.00125,
+        "SizeMin": 0.015,
+        "SizeMax": 0.8,
+        "DistMin": 0.6, 
         "DistMax": 12
     }, 
     
@@ -14,6 +14,6 @@
         "Size": 0.001, 
         "Ratio": 1.1, 
         "Thickness": 0.025, 
-        "NElements": 15
+        "NElements": 50
     }
 }
