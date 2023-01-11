@@ -20,7 +20,7 @@ solvers
         solver              GAMG;
         smoother            GaussSeidel;
         //preconditioner  DIC;
-        tolerance           1e-6;
+        tolerance           1e-7;
         relTol              0.01;
         nPreSweeps          0; 
         nPostSweeps         5;
@@ -31,7 +31,7 @@ solvers
     {
         $p;
     }
-
+    
     U
     {
         type coupled;
@@ -42,20 +42,19 @@ solvers
         minIter 3;
     }
 
-    "(|k|omega|gammaInt|ReThetat)"
+    "(k|omega|gammaInt|ReThetat)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
-        tolerance       1e-8;
+        tolerance       1e-7;
         relTol          0.01;
     }
 }
 
 SIMPLE
 {
-    nNonOrthogonalCorrectors 2;
+    nNonOrthogonalCorrectors 1;
     
-    nCorrectors 2;
     consistent yes;
 
     residualControl
@@ -68,23 +67,19 @@ SIMPLE
 
 relaxationFactors
 {
+
     equations
     {
         
-        U               0.3;
-        k               0.05;            //low value 0.01
-        omega           0.05;            //low value 0.01
-        ReThetat        0.2; 
-        gammaInt        0.2;
+        U               0.25;
+        k               0.04;            //low value 0.01
+        omega           0.04;            //low value 0.01
+        ReThetat        0.25; 
+        gammaInt        0.25;
         
         //".*"            0.5;
     }
 
-}
-
-cache
-{
-    grad(U);
 }
 
 // ************************************************************************* //

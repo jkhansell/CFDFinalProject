@@ -5,11 +5,11 @@ python3 runcase.py  --scheme   "steady"                   \
                     --Tu       0.94                       \
                     --nu       1.1516e-5                  \
                     --nuratio  0.1                        \
-                    --aoa      8.                         \
+                    --aoa      4.                         \
                     --c        1                          \
                     --s        0.001                      \
                     --rho      1.18                       \
-                    --nsteps   4000                       \
+                    --nsteps   3000                       \
                     --airfoil  "./airfoils/NRELs826.txt"  \
                     --savepath "../runs/"                      \
                     --meshcontrols "meshcontrols/Mesh2.json"  \

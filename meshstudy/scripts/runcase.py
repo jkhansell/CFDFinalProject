@@ -1,7 +1,7 @@
 # regular imports
 import os
 import argparse
-
+import numpy as np
 import json
 
 # PyFoam imports 
@@ -51,6 +51,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     cwd = os.getcwd()
     os.chdir(case.name)
     os.system("gmshToFoam airfoil.msh")
+    os.system("rm airfoil.msh")
     os.chdir(cwd)
     
     os.system("pyFoamChangeBoundaryType.py "+case.name+ " Sides empty")
@@ -86,7 +87,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     controlDict["functions"]["forceCoeffs"]["rhoInf"] = rhoInf
     controlDict["functions"]["forceCoeffs"]["magUInf"] = U
     controlDict["functions"]["forceCoeffs"]["lRef"] = chord_length
-    controlDict["functions"]["forceCoeffs"]["Aref"] = chord_length*span
+    controlDict["functions"]["forceCoeffs"]["Aref"] = chord_length*span*np.cos(aoa*np.pi/180)
 
     
     
@@ -108,7 +109,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     os.chdir(case.name)
     
     os.system("checkMesh > mesh.log")
-    
+    """
     os.system("decomposePar")   
     if tScheme == "steady":
         os.system("mpirun -np 4 simpleFoam > log.airfoil -parallel")
@@ -117,7 +118,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     os.system("reconstructPar") 
     os.system("postProcess -func sampleObjectPatch")
     #os.system("postProcess -func yplus")
-    
+    """
     
     os.chdir(cwd)
 

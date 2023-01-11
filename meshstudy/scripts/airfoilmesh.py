@@ -91,7 +91,6 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.model.occ.synchronize() 
 
 
-
     gmsh.model.mesh.field.add("Distance", 1)
     gmsh.model.mesh.field.setNumbers(1, "CurvesList", [spl])
     gmsh.model.mesh.field.setNumber(1, "Sampling", 200)
@@ -112,7 +111,7 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.model.mesh.field.setNumber(6, "YMin", AFcentroid[1]-1.1*chord_length)
     gmsh.model.mesh.field.setNumber(6, "YMax", AFcentroid[1]+1.1*chord_length)
     gmsh.model.mesh.field.setNumber(6, "Thickness", 2)
-    """
+    
     
     
     f = gmsh.model.mesh.field.add('BoundaryLayer')
@@ -124,7 +123,7 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.option.setNumber('Mesh.BoundaryLayerFanElements', mesh_controls["boundaryLayer"]["NElements"])
     gmsh.model.mesh.field.setNumbers(f, 'FanPointsList', [tags[-1]])
     gmsh.model.mesh.field.setAsBoundaryLayer(f)
-    
+    """
 
     #######################################################################
 
