@@ -51,12 +51,6 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
     C1 = gmsh.model.occ.addPoint(0.0,
                                  N_y*chord_length,
                                  0.0)
-    C2 = gmsh.model.occ.addPoint(-N_y*chord_length*np.cos(np.pi/3),
-                                 N_y*chord_length*np.sin(np.pi/3),
-                                 0.0)
-    C4 = gmsh.model.occ.addPoint(-N_y*chord_length*np.cos(np.pi/3),
-                                -N_y*chord_length*np.sin(np.pi/3),
-                                 0.0)
     C5 = gmsh.model.occ.addPoint(0.0,
                                 -N_y*chord_length,
                                  0.0)

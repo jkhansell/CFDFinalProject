@@ -1,0 +1,16 @@
+{
+    "name": "Struct1",
+    "Ratio": 1.06,
+    "Zone1":100,
+    "Zone2":100,
+    "Zone3":100,
+    "Zone4":100,
+    "Zone5":100,
+    "DomainHeight": 15,
+    "DomainLength": 20, 
+    "span": 0.01,
+    "chordlength":1,
+    "Rdivs": 150,
+    "aoa":4
+}
+
