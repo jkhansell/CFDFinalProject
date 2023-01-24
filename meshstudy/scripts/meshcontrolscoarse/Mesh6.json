@@ -1,19 +1,20 @@
 {
-    "name": "Mesh11",
+    "name": "Mesh6",
     "generalMesh": 
     {
-        "setSize": 0.0008,
-        "SizeMin": 0.007,
-        "SizeMax": 0.6,
-        "DistMin": 0.6, 
+        "setSize": 0.00095,
+        "SizeMin": 0.008,
+        "SizeMax": 0.675,
+        "DistMin": 0.65, 
         "DistMax": 12
     }, 
     
     "boundaryLayer": 
     {
-        "Size": 0.0008, 
+        "Size": 0.001, 
         "Ratio": 1.1, 
         "Thickness": 0.025, 
         "NElements": 50
+
     }
 }

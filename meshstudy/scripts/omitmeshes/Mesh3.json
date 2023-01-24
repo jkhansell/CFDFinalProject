@@ -1,11 +1,11 @@
 {
-    "name": "Mesh12",
+    "name": "Mesh3",
     "generalMesh": 
     {
-        "setSize": 0.001,
-        "SizeMin": 0.008,
-        "SizeMax": 0.65,
-        "DistMin": 0.65, 
+        "setSize": 0.0018,
+        "SizeMin": 0.015,
+        "SizeMax": 0.725,
+        "DistMin": 0.7, 
         "DistMax": 12
     }, 
     
@@ -14,6 +14,6 @@
         "Size": 0.0008, 
         "Ratio": 1.1, 
         "Thickness": 0.025, 
-        "NElements": 65
+        "NElements": 50
     }
 }

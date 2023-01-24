@@ -1,17 +1,17 @@
 {
-    "name": "Mesh4",
+    "name": "Mesh2",
     "generalMesh": 
     {
-        "setSize": 0.0017,
-        "SizeMin": 0.01,
-        "SizeMax": 0.7,
-        "DistMin": 0.5, 
+        "setSize": 0.0019,
+        "SizeMin": 0.02,
+        "SizeMax": 0.8,
+        "DistMin": 0.6, 
         "DistMax": 12
     }, 
     
     "boundaryLayer": 
     {
-        "Size": 0.0008, 
+        "Size": 0.001, 
         "Ratio": 1.1, 
         "Thickness": 0.025, 
         "NElements": 50
