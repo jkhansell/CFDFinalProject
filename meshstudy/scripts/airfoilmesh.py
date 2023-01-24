@@ -53,7 +53,7 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     spl = gmsh.model.occ.addSpline(tags, 1)
     airfoilloop = gmsh.model.occ.addCurveLoop([spl])
     gmsh.model.occ.mesh.setSize(gmsh.model.occ.getEntities(0), 
-                    mesh_controls["generalMesh"]["setSize"]*chord_length)
+        mesh_controls["generalMesh"]["setSize"]*chord_length)
 
     #rectangle domain specification
     p1 = gmsh.model.occ.addPoint(AFcentroid[0]-15*chord_length, AFcentroid[1]-15*chord_length,0.0)
@@ -68,8 +68,8 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
 
     cout = gmsh.model.occ.addCurveLoop([l1, l2, l3, l4])
     airfoil = gmsh.model.occ.addPlaneSurface([cout, airfoilloop])
-
     gmsh.model.occ.synchronize()
+
     #gmsh.model.mesh.setRecombine(2, airfoil)
 
     OFairfoil = gmsh.model.occ.extrude([(2,airfoil)], 0, 0, span, numElements=[1], \
@@ -120,11 +120,11 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.model.mesh.field.setNumber(f, 'Ratio',mesh_controls["boundaryLayer"]["Ratio"])
     gmsh.model.mesh.field.setNumber(f, 'Quads', 1)
     gmsh.model.mesh.field.setNumber(f, 'Thickness', mesh_controls["boundaryLayer"]["Thickness"]*chord_length)
-    gmsh.option.setNumber('Mesh.BoundaryLayerFanElements', mesh_controls["boundaryLayer"]["NElements"])
-    gmsh.model.mesh.field.setNumbers(f, 'FanPointsList', [tags[-1]])
+    #gmsh.option.setNumber('Mesh.BoundaryLayerFanElements', mesh_controls["boundaryLayer"]["NElements"])
+    #gmsh.model.mesh.field.setNumbers(f, 'FanPointsList', [tags[-1]])
     gmsh.model.mesh.field.setAsBoundaryLayer(f)
+    
     """
-
     #######################################################################
 
     gmsh.model.mesh.field.setAsBackgroundMesh(2)
@@ -134,8 +134,8 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.model.mesh.field.add("Min", 7)
     gmsh.model.mesh.field.setNumbers(7, "FieldsList", [2])
     gmsh.model.mesh.field.setAsBackgroundMesh(7)
-
-    gmsh.option.setNumber("Mesh.Algorithm3D", 1)
+    gmsh.option.setNumber("Mesh.Algorithm", 2)
+    
 
 
     gmsh.model.mesh.generate(3)

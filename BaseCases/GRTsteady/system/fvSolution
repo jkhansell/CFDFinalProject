@@ -72,10 +72,10 @@ relaxationFactors
     {
         
         U               0.25;
-        k               0.04;            //low value 0.01
-        omega           0.04;            //low value 0.01
-        ReThetat        0.25; 
-        gammaInt        0.25;
+        k               0.05;            //low value 0.01
+        omega           0.05;            //low value 0.01
+        ReThetat        0.3; 
+        gammaInt        0.3;
         
         //".*"            0.5;
     }

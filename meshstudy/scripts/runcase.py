@@ -109,16 +109,18 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     os.chdir(case.name)
     
     os.system("checkMesh > mesh.log")
-    """
+    
     os.system("decomposePar")   
+        
     if tScheme == "steady":
         os.system("mpirun -np 4 simpleFoam > log.airfoil -parallel")
     else:
         os.system("mpirun -np 4 pimpleFoam > log.airfoil -parallel")
     os.system("reconstructPar") 
     os.system("postProcess -func sampleObjectPatch")
+    
     #os.system("postProcess -func yplus")
-    """
+    
     
     os.chdir(cwd)
 

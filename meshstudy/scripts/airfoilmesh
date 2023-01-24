@@ -1,8 +1,8 @@
 #!/bin/bash
 
-python3 airfoilmesh.py  --airfoil ./airfoils/SG6043altered.txt \
+python3 airfoilmesh.py  --airfoil ./airfoils/NRELs826altered.txt \
                         --AoA 8. \
                         --writepath airfoil.msh \
                         --c 1 \
                         --s 0.1 \
-                        --meshcontrols meshcontrolsfine/Mesh13.json \
+                        --meshcontrols meshcontrolsfine/Mesh10.json \

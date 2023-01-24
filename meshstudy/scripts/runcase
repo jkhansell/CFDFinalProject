@@ -12,4 +12,4 @@ python3 runcase.py  --scheme   "steady"                   \
                     --nsteps   3000                       \
                     --airfoil  "./airfoils/NRELs826.txt"  \
                     --savepath "../runs/"                      \
-                    --meshcontrols "meshcontrols/Mesh2.json"  \
+                    --meshcontrols "meshcontrolscoarse/Mesh2.json"  \
