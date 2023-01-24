@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python3 structuredmesh.py   --airfoil ../../../airfoils/NRELs826.txt \
+                            --writepath airfoil.msh \
+                            --meshparams meshparams/paramfile.json \

@@ -154,7 +154,6 @@ def structured_mesh(airfoilpath, writepath,
     # front inlet 
     gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][1][1][1], 100, "Progression", 1.06)
     gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][2][1][1], 100, "Progression", 1.06)
-
     gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][1][1], 100)
     gmsh.model.mesh.setTransfiniteCurve(circ1, 100)
 

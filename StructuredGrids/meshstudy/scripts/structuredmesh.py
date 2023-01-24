@@ -4,57 +4,80 @@ import scipy.interpolate as sint
 import argparse
 import json
 
-def structured_mesh(airfoilpath, writepath, angleofattack,
-                    chord_length, N_x, N_y, span, mesh_controls):
 
+def structured_mesh(airfoilpath, writepath, meshparamspath):
+
+    """
+        A pygmsh function to create a structure transfinite airfoil for suitable for OpenFOAM
+        simulation. 
+    """
+
+    with open(meshparamspath) as meshfile: 
+        mesh_params = json.load(meshfile)
+
+    angleofattack = mesh_params["aoa"]
+    chord_length =  mesh_params["chordlength"]
+    L_x = mesh_params["DomainLength"]
+    L_y = mesh_params["DomainHeight"]
+    N_r = mesh_params["Rdivs"]
+    N_1 = mesh_params["Zone1"]
+    N_2 = mesh_params["Zone2"]
+    N_3 = mesh_params["Zone3"]
+    N_H = mesh_params["Hdivs"]
+    gratio = mesh_params["R_ratio"]
+    hratio = mesh_params["H_ratio"]
+
+    # initialize gmsh CAD engine
     gmsh.initialize()
-    gmsh.model.add("structured_mesh")
-    
-    
-    #rotation matrix set up
-    angle = np.pi*angleofattack/180
-    RM = np.array([[np.cos(angle),-np.sin(angle)],
-                [np.sin(angle),np.cos(angle)]])
 
+    # set model name
+    gmsh.model.add(mesh_params["name"])
 
-    #airfoildata read 
-    airfoildata = chord_length*np.loadtxt(airfoilpath, delimiter=',') # example: airfoilpath -> "./mesh/NRELs826.txt"
-    airfoildata = airfoildata @ RM + np.array([3*chord_length, 0.])
-    AFcentroid = np.mean(airfoildata, axis=0)
+    # airfoildata read 
+    # example: airfoilpath -> "./mesh/NRELs826.txt"
+    
+    airfoildata = chord_length*np.loadtxt(airfoilpath, delimiter=',')
+    airfoildata = airfoildata + np.array([3*chord_length, 0.])
+    
+    # calculate centroid of data points
+    AFcentroid = np.mean(airfoildata, axis=0) 
+
+    # interpolate data via a Bspline (optional)
     spline = sint.splprep(airfoildata.T, s=0.0, k=2)
     t = np.linspace(0, 1, 300)
     coords = np.array(sint.splev(t, spline[0], der=0)).T
 
+    # gmsh uses the OpenCASCADE kernel for CAD I/O and generation
 
     tags = []
-    #airfoil point generation
+    # airfoil point generation
     for i in range(len(coords)):
         gmsh.model.occ.addPoint(coords[i,0], coords[i,1], 0.0, tag=i+1)
         tags.append(i+1)
     tags.append(1)
 
-    #spline interpolation of curve
+    # spline interpolation of curve using gmsh module
     spl = gmsh.model.occ.addSpline(tags, 1)
     airfoilloop = gmsh.model.occ.addCurveLoop([spl])
     
-    #gmsh.model.occ.mesh.setSize(gmsh.model.occ.getEntities(0), 0.002)
 
+    # point definition
     center = gmsh.model.occ.addPoint(0.0,0.0,0.0)
-
-    p1 = gmsh.model.occ.addPoint(3.1*chord_length, AFcentroid[1], 0.0)
-    p3 = gmsh.model.occ.addPoint(7*chord_length, N_y*chord_length, 0.0)
-    p4 = gmsh.model.occ.addPoint(7*chord_length,-N_y*chord_length, 0.0)
-    p5 = gmsh.model.occ.addPoint(N_x*chord_length, N_y*chord_length,0.0)
-    p6 = gmsh.model.occ.addPoint(N_x*chord_length,-N_y*chord_length,0.0)
-    p7 = gmsh.model.occ.addPoint(N_x*chord_length, 0.0, 0.0)
+    p1 = gmsh.model.occ.addPoint(3.3*chord_length, AFcentroid[1], 0.0)
+    p3 = gmsh.model.occ.addPoint(7*chord_length, L_y*chord_length, 0.0)
+    p4 = gmsh.model.occ.addPoint(7*chord_length,-L_y*chord_length, 0.0)
+    p5 = gmsh.model.occ.addPoint(L_x*chord_length, L_y*chord_length,0.0)
+    p6 = gmsh.model.occ.addPoint(L_x*chord_length,-L_y*chord_length,0.0)
+    p7 = gmsh.model.occ.addPoint(L_x*chord_length, 0.0, 0.0)
 
     C1 = gmsh.model.occ.addPoint(0.0,
-                                 N_y*chord_length,
+                                 L_y*chord_length,
                                  0.0)
     C5 = gmsh.model.occ.addPoint(0.0,
-                                -N_y*chord_length,
+                                -L_y*chord_length,
                                  0.0)
 
+    # exterior 1d domain definition
 
     circ1 = gmsh.model.occ.addCircleArc(C5, center, C1)
     
@@ -72,18 +95,15 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
     l10 = gmsh.model.occ.addLine(p1, C1)
     l11 = gmsh.model.occ.addLine(p1, C5)
 
-    #cutline1 = gmsh.model.occ.addLine(C3, p1)
-    #cutline2 = gmsh.model.occ.addLine(C2, p1)
-    #cutline3 = gmsh.model.occ.addLine(C4, p1)
-
     gmsh.model.occ.synchronize()
 
+    # cut sections for different mesh types
     fragments_sect1 = gmsh.model.occ.fragment([(1, airfoilloop)], [(1, l10), (1, l11)])
-
-    #print(fragments_sect1)
 
     gmsh.model.occ.synchronize()
     
+
+    # add curve loops for extrusion
     outlet1 = gmsh.model.occ.addCurveLoop([l2, l3, l9, l7])
     outlet2 = gmsh.model.occ.addCurveLoop([l5, l4, l9, l8])
 
@@ -102,6 +122,7 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
 
     gmsh.model.occ.synchronize()
 
+    # add Planar surface entities
 
     surfout1 = gmsh.model.occ.addPlaneSurface([outlet1])
     surfout2 = gmsh.model.occ.addPlaneSurface([outlet2])
@@ -115,49 +136,38 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
                 (2, surfintop),
                 (2, surfinbottom)]
 
+    # set domains to be meshed by a transfinite algorithm (structured mesh)
+    # all radial divisions will have a number N_r of divisions with the same growth ratio
+    
+    # Radially outward divisions
+    gmsh.model.mesh.setTransfiniteCurve(l7, N_r, "Progression", gratio)
+    gmsh.model.mesh.setTransfiniteCurve(l8, N_r, "Progression", gratio)
+    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][1][1][1], N_r, "Progression", gratio)
+    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][2][1][1], N_r, "Progression", gratio)
+    gmsh.model.mesh.setTransfiniteCurve(l3, N_r,"Progression", -gratio)
+    gmsh.model.mesh.setTransfiniteCurve(l4, N_r,"Progression", gratio)
 
+    # inlet and front of airfoil 
+    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][1][1], N_1)
+    gmsh.model.mesh.setTransfiniteCurve(circ1, N_1)
 
-    # side 1
-    gmsh.model.mesh.setTransfiniteCurve(l7, 100, "Progression", 1.06)
-
-    # side 2
-    gmsh.model.mesh.setTransfiniteCurve(l8, 100, "Progression", 1.06)
-    # front inlet 
-    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][1][1][1], 100, "Progression", 1.06)
-    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][2][1][1], 100, "Progression", 1.06)
-
-    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][1][1], 100)
-    gmsh.model.mesh.setTransfiniteCurve(circ1, 100)
-
-
-    gmsh.model.mesh.setTransfiniteCurve(circ1, 100)
-
-    #spline and top/bottom hourglass sections
-    N = 125
-    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][0][1], N)
-    gmsh.model.mesh.setTransfiniteCurve(l1, N)
-    gmsh.model.mesh.setTransfiniteCurve(l6, N)
-    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][2][1], N)
-
-
-
-    gmsh.model.mesh.setTransfiniteCurve(l3, 100,"Progression", -1.06)
-    gmsh.model.mesh.setTransfiniteCurve(l4, 100,"Progression", 1.06)
-
+    #spline top/bottom hourglass sections
+    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][0][1], N_2)
+    gmsh.model.mesh.setTransfiniteCurve(l1, N_2)
+    gmsh.model.mesh.setTransfiniteCurve(l6, N_3)
+    gmsh.model.mesh.setTransfiniteCurve(fragments_sect1[1][0][2][1], N_3)
 
     # horizontal outlet
-    gmsh.model.mesh.setTransfiniteCurve(l2, 100, "Progression", 1.06)
-    gmsh.model.mesh.setTransfiniteCurve(l9, 100, "Progression", 1.06) 
-    gmsh.model.mesh.setTransfiniteCurve(l5, 100, "Progression", -1.06)
-
-
- 
+    gmsh.model.mesh.setTransfiniteCurve(l2, N_H, "Progression", hratio)
+    gmsh.model.mesh.setTransfiniteCurve(l9, N_H, "Progression", hratio) 
+    gmsh.model.mesh.setTransfiniteCurve(l5, N_H, "Progression",-hratio)
+    
+    # set transfinite surfaces for gridding
     gmsh.model.mesh.setTransfiniteSurface(surfout1, "Left")
     gmsh.model.mesh.setTransfiniteSurface(surfout2, "Left")
     gmsh.model.mesh.setTransfiniteSurface(surfinmid, "Left")
     gmsh.model.mesh.setTransfiniteSurface(surfintop, "Left")
     gmsh.model.mesh.setTransfiniteSurface(surfinbottom, "Left")
-
 
     gmsh.model.mesh.setRecombine(2, surfout1)
     gmsh.model.mesh.setRecombine(2, surfout2)
@@ -167,11 +177,13 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
 
     gmsh.model.occ.synchronize()
 
+    # Extrude model for OpenFOAM compatibility
     OFairfoil = gmsh.model.occ.extrude(surfaces, 0, 0, 0.3, numElements=[1], \
                     heights = [1], recombine=True) 
 
     gmsh.model.occ.synchronize()
 
+    # physical domain identification for OpenFOAM compatibility
 
     volumes = []
     fusedvol = []
@@ -221,10 +233,27 @@ def structured_mesh(airfoilpath, writepath, angleofattack,
     
     gmsh.model.mesh.generate(3)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.)
-    gmsh.write("airfoil.msh") 
+    gmsh.write(writepath) 
 
     gmsh.finalize()
 
 
 if __name__ == '__main__':
-    structured_mesh("./meshstudy/scripts/airfoils/NRELs826.txt", 0., 1, 40, 25)
+    
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--airfoil", 
+                        help="Airfoil path definition",
+                        type=str)
+
+    parser.add_argument("--writepath", 
+                        help="Write path definition",
+                        type=str)
+    
+    parser.add_argument("--meshparams",
+                        help="Mesh parameters json file path",
+                        type=str)
+
+    args = parser.parse_args()
+
+    structured_mesh(args.airfoil, args.writepath, args.meshparams)
