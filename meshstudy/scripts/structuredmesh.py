@@ -1,14 +1,16 @@
 import gmsh
 import numpy as np
 import scipy.interpolate as sint
+import argparse
+import json
 
-def structured_mesh(airfoilpath, angleofattack, chord_length, N_x, N_y):
-    
-    
-    
-    
+def structured_mesh(airfoilpath, writepath, angleofattack,
+                    chord_length, N_x, N_y, span, mesh_controls):
+
     gmsh.initialize()
     gmsh.model.add("structured_mesh")
+    
+    
     #rotation matrix set up
     angle = np.pi*angleofattack/180
     RM = np.array([[np.cos(angle),-np.sin(angle)],
@@ -225,11 +227,7 @@ def structured_mesh(airfoilpath, angleofattack, chord_length, N_x, N_y):
     
     gmsh.model.mesh.generate(3)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.)
-    gmsh.write("airfoil.msh")
-
-    gmsh.fltk.run()
-
-    
+    gmsh.write("airfoil.msh") 
 
     gmsh.finalize()
 
