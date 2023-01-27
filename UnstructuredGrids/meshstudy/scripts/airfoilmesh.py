@@ -5,7 +5,7 @@ import numpy as np
 import argparse
 import json
 
-def mesh_airfoil(airfoilpath, angleofattack, writepath, 
+def mesh_airfoil(airfoilpath, writepath, 
             chord_length=1, span=0.1, 
             mesh_controls={
                 "generalMesh": 
@@ -30,15 +30,9 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
 
     #domain parameters
 
-    #rotation matrix set up
-    angle = np.pi*angleofattack/180
-    RM = np.array([[np.cos(angle),-np.sin(angle)],
-                [np.sin(angle),np.cos(angle)]])
-
-
     #airfoildata read 
     airfoildata = chord_length*np.loadtxt(airfoilpath, delimiter=',') # example: airfoilpath -> "./mesh/NRELs826.txt"
-    airfoildata = airfoildata @ RM
+    airfoildata = airfoildata
     AFcentroid = np.mean(airfoildata, axis=0)
 
     tags = []
@@ -77,15 +71,10 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
 
     gmsh.model.occ.synchronize()
 
-    gmsh.model.addPhysicalGroup(2, [OFairfoil[6][1]], name="Object")
-    gmsh.model.addPhysicalGroup(2, [OFairfoil[5][1]], name="Inlet")
-    gmsh.model.addPhysicalGroup(2, [OFairfoil[3][1]], name="Outlet")
-    #gmsh.model.addPhysicalGroup(2, [OFairfoil[3][1]], name="back")
-    #gmsh.model.addPhysicalGroup(2, [OFairfoil[2][1]], name="bottom")
-    gmsh.model.addPhysicalGroup(2, [OFairfoil[2][1], OFairfoil[4][1]], name="Walls")
-
-    #gmsh.model.addPhysicalGroup(2, [airfoil], name="right")
-    gmsh.model.addPhysicalGroup(2, [OFairfoil[0][1], airfoil], name="Sides")
+    gmsh.model.addPhysicalGroup(2, [OFairfoil[6][1]], name="airfoil")
+    gmsh.model.addPhysicalGroup(2, [OFairfoil[5][1], OFairfoil[2][1], OFairfoil[4][1]], name="inlet")
+    gmsh.model.addPhysicalGroup(2, [OFairfoil[3][1]], name="outlet")
+    gmsh.model.addPhysicalGroup(2, [OFairfoil[0][1], airfoil], name="sides")
     gmsh.model.addPhysicalGroup(3, [OFairfoil[1][1]], name="Fluid")
 
     gmsh.model.occ.synchronize() 

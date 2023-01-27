@@ -1,15 +1,15 @@
 #!/bin/bash
 
-python3 runcase.py  --scheme   "steady"                   \
-                    --Reynolds 1e5                        \
-                    --Tu       0.94                       \
-                    --nu       1.1516e-5                  \
-                    --nuratio  0.1                        \
-                    --aoa      4.                         \
-                    --c        1                          \
-                    --s        0.001                      \
-                    --rho      1.18                       \
-                    --nsteps   3000                       \
-                    --airfoil  "./airfoils/NRELs826.txt"  \
-                    --savepath "../runs/"                      \
-                    --meshcontrols "meshcontrolscoarse/Mesh2.json"  \
+python3 runcase_unstructured.py  --scheme   "steady"                   \
+                                --Reynolds 1e5                        \
+                                --Tu       0.2                      \
+                                --nu       1.1516e-5                  \
+                                --nuratio  0.1                        \
+                                --aoa      4.0                        \
+                                --c        0.3                          \
+                                --s        0.01                      \
+                                --rho      1.18                       \
+                                --nsteps   4000                       \
+                                --airfoil  "../../../airfoils/NRELs826.txt"  \
+                                --savepath "../runs/"                      \
+                                --meshcontrols "meshcontrolscoarse/Mesh2.json"  \

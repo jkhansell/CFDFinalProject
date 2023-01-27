@@ -5,17 +5,14 @@ import argparse
 import json
 
 
-def structured_mesh(airfoilpath, writepath, meshparamspath):
+def structured_mesh(airfoilpath, writepath, mesh_params):
 
     """
         A pygmsh function to create a structure transfinite airfoil for suitable for OpenFOAM
         simulation. 
     """
 
-    with open(meshparamspath) as meshfile: 
-        mesh_params = json.load(meshfile)
 
-    angleofattack = mesh_params["aoa"]
     chord_length =  mesh_params["chordlength"]
     L_x = mesh_params["DomainLength"]
     L_y = mesh_params["DomainHeight"]
@@ -26,6 +23,7 @@ def structured_mesh(airfoilpath, writepath, meshparamspath):
     N_H = mesh_params["Hdivs"]
     gratio = mesh_params["R_ratio"]
     hratio = mesh_params["H_ratio"]
+    span = mesh_params["span"]
 
     # initialize gmsh CAD engine
     gmsh.initialize()
@@ -178,7 +176,7 @@ def structured_mesh(airfoilpath, writepath, meshparamspath):
     gmsh.model.occ.synchronize()
 
     # Extrude model for OpenFOAM compatibility
-    OFairfoil = gmsh.model.occ.extrude(surfaces, 0, 0, 0.3, numElements=[1], \
+    OFairfoil = gmsh.model.occ.extrude(surfaces, 0, 0, span, numElements=[1], \
                     heights = [1], recombine=True) 
 
     gmsh.model.occ.synchronize()
