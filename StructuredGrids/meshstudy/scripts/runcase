@@ -2,12 +2,12 @@
 
 python3 runcase_structured.py       --scheme   "steady"                             \
                                     --Reynolds 1e5                                  \
-                                    --Tu       0.2                                 \
+                                    --Tu       0.22                                 \
                                     --nu       1.1516e-5                            \
                                     --nuratio  0.1                                  \
-                                    --aoa      4.                                    \
+                                    --aoa      4.0                                    \
                                     --rho      1.18                                 \
                                     --nsteps   4000                                 \
-                                    --airfoil  "../../../airfoils/NRELs826.txt"     \
+                                    --airfoil  "../../../airfoils/NRELs826altered.txt"     \
                                     --savepath "../runs/"                           \
-                                    --meshcontrols "meshparams/paramfile.json"      \
+                                    --meshcontrols "meshparams/meshes/mesh0.json"      \

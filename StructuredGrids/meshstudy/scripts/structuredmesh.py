@@ -232,7 +232,7 @@ def structured_mesh(airfoilpath, writepath, mesh_params):
     gmsh.model.mesh.generate(3)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.)
     gmsh.write(writepath) 
-
+    gmsh.fltk.run()
     gmsh.finalize()
 
 
@@ -254,4 +254,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    structured_mesh(args.airfoil, args.writepath, args.meshparams)
+    with open(args.meshparams) as meshfile: 
+        mesh_params = json.load(meshfile)
+
+    structured_mesh(args.airfoil, args.writepath, mesh_params)

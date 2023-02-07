@@ -41,7 +41,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     else:
         templateCase = SolutionDirectory("../../BaseCases/GRTunsteady", archive=None, paraviewLink=False)
     
-    case = templateCase.cloneCase(save_path+"GRT"+tScheme+str(int(aoa)))
+    case = templateCase.cloneCase(save_path+"GRT"+tScheme+str(int(aoa))+mesh_controls["name"])
 
     # Mesh airfoil 
 
@@ -88,6 +88,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     controlDict["functions"]["forceCoeffs"]["magUInf"] = U
     controlDict["functions"]["forceCoeffs"]["lRef"] = chord_length
     controlDict["functions"]["forceCoeffs"]["Aref"] = chord_length*span
+    controlDict["functions"]["forceCoeffs"]["CofR"] = Vector(3*chord_length, 0, 0)
     
     UFile.writeFile()
     ReThetatFile.writeFile()
