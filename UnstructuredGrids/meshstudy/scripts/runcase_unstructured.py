@@ -10,7 +10,7 @@ from PyFoam.RunDictionary.ParsedParameterFile import ParsedParameterFile
 from PyFoam.Basics.DataStructures import Vector
 
 # local imports
-import airfoilmesh
+import airfoilmesh2
 
 def Rethetat(Tu):
     if Tu <= 1.3: 
@@ -36,7 +36,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     # Case setup OpenFOAM
 
     if tScheme == "steady":
-        templateCase = SolutionDirectory("../../../BaseCases/Structured/GRTsteady", archive=None, paraviewLink=False)
+        templateCase = SolutionDirectory("../../../BaseCases/Unstructured/GRTsteady", archive=None, paraviewLink=False)
     else:
         templateCase = SolutionDirectory("../../BaseCases/GRTunsteady", archive=None, paraviewLink=False)
     
@@ -45,7 +45,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     # Mesh airfoil 
 
     writepath = os.path.join(case.name,"airfoil.msh")
-    airfoilmesh.mesh_airfoil(airfoilpath, writepath, 
+    airfoilmesh2.mesh_airfoil(airfoilpath, writepath, 
                     chord_length=chord_length, span=span, mesh_controls=mesh_controls)
 
     cwd = os.getcwd()
@@ -56,6 +56,8 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     
     os.system("pyFoamChangeBoundaryType.py "+case.name+ " sides empty")
     os.system("pyFoamChangeBoundaryType.py "+case.name+ " airfoil wall")
+    #os.system("pyFoamChangeBoundaryType.py "+case.name+ " Walls wall")
+
 
     # Modify initial conditions
 
