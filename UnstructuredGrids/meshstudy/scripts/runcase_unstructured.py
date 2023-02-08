@@ -109,6 +109,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     
     os.system("checkMesh > mesh.log")
     
+    
     os.system("decomposePar")   
         
     if tScheme == "steady":

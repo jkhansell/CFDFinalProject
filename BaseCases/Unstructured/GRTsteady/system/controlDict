@@ -75,7 +75,7 @@ functions
     {
         type                forceCoeffs; 
         libs                ("libforces.so");
-        patches             (Object);
+        patches             (airfoil);
 
         pName               p; 
         UName	            U;
@@ -100,6 +100,15 @@ functions
             direction   (1 0 0);
             cumulative  yes;
         }
+    }
+
+    writeCellVolumes1
+    {
+        type        writeCellVolumes; 
+        libs        ("libfieldFunctionObjects.so");
+
+        writeControl timeStep;
+        writeInterval $time;
     }
 
 }

@@ -7,7 +7,7 @@ writeFields     true;
 surfaceFormat   raw; 
 regionType      patch; 
 
-name            Object; 
+name            airfoil; 
 
 operation       none; 
 

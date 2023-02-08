@@ -3,9 +3,9 @@
     "generalMesh": 
     {
         "setSize": 0.0015,
-        "SizeMin": 0.008,
-        "SizeMax": 0.5,
-        "DistMin": 0.25, 
+        "SizeMin": 0.04,
+        "SizeMax": 0.65,
+        "DistMin": 0.4, 
         "DistMax": 10
     }
 }

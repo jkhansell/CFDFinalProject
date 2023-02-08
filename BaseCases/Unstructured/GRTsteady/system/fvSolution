@@ -53,10 +53,8 @@ solvers
 
 SIMPLE
 {
-    nNonOrthogonalCorrectors 1;
+    nNonOrthogonalCorrectors 3;
     
-    consistent yes;
-
     residualControl
     {
         p               1e-7;
@@ -67,15 +65,19 @@ SIMPLE
 
 relaxationFactors
 {
+    fields
+    {
+        p               0.3;
+    }
 
     equations
     {
         
-        U               0.25;
+        U               0.7;
         k               0.05;            //low value 0.01
         omega           0.05;            //low value 0.01
-        ReThetat        0.3; 
-        gammaInt        0.3;
+        ReThetat        0.7; 
+        gammaInt        0.7;
         
         //".*"            0.5;
     }

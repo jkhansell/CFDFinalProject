@@ -20,28 +20,24 @@ internalField   uniform 0.0;
 
 boundaryField
 {
-    Inlet
+    inlet
     {
-        type zeroGradient;
+        type            freestreamPressure;
+        freestreamValue $internalField;
     }
 
-    Outlet
+    outlet
     {
-        type    fixedValue;
-        value   $internalField;
+        type            freestreamPressure;
+        freestreamValue $internalField;
     }
 
-    Sides
+    sides
     {
         type    empty;
     }
 
-    Object
-    {
-        type    zeroGradient;
-    }
-
-    Walls
+    airfoil
     {
         type    zeroGradient;
     }
