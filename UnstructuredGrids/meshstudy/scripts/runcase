@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo 'Running Simulation'
+echo
 python3 runcase_unstructured.py  --scheme   "steady"                   \
                                 --Reynolds 1e5                        \
                                 --Tu       0.2                      \

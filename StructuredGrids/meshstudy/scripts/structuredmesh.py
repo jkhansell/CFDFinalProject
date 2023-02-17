@@ -232,7 +232,6 @@ def structured_mesh(airfoilpath, writepath, mesh_params):
     gmsh.model.mesh.generate(3)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.)
     gmsh.write(writepath) 
-    gmsh.fltk.run()
     gmsh.finalize()
 
 

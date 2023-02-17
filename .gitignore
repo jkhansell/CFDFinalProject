@@ -1,6 +1,8 @@
 meshstudy/meshsweep2500steps
 meshstudy/meshsweep3000steps
 meshstudy/meshsweep*
+*.err
+*.out
 *meshsweep*
 *runs*
 *__pycache__/

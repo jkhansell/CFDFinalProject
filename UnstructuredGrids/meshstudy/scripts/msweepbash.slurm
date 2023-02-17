@@ -1,5 +1,15 @@
 #!/bin/sh
 
+#SBATCH --job-name=OFmeshsweep
+#SBATCH --partition=nu
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=64
+#SBATCH --time=15:00:00
+#SBATCH --output=output_%j.out
+#SBATCH --error=output_%j.err
+#SBATCH --mail-user=jovillalobos@cenat.ac.cr
+#SBATCH --mail-type=END,FAIL
+
 rm -r ../meshsweep
 mkdir ../meshsweep
 

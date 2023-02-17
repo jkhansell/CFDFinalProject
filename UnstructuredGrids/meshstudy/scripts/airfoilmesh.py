@@ -169,4 +169,4 @@ if __name__ == "__main__":
         meshcontrols = json.load(meshfile)
 
     mesh_airfoil(args.airfoil, args.AoA, args.writepath, 
-            args.c, args.c, meshcontrols)
+            args.c, args.s, meshcontrols)
