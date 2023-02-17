@@ -9,3 +9,4 @@ meshstudy/meshsweep*
 *.ipynb_checkpoints
 *.code-workspace
 airfoil2D/
+*.png

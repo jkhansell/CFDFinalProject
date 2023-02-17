@@ -2,9 +2,9 @@
     "name": "Mesh4",
     "generalMesh": 
     {
-        "setSize": 0.0015,
-        "SizeMin": 0.04,
-        "SizeMax": 0.65,
+        "setSize": 0.001,
+        "SizeMin": 0.009,
+        "SizeMax": 0.55,
         "DistMin": 0.4, 
         "DistMax": 10
     }
