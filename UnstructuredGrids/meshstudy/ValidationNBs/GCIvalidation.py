@@ -48,5 +48,3 @@ class AirfoilSimValidation(object):
             self.r.append(self.h[i+1]/self.h[i])
 
 
-        
-
