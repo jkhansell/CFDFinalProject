@@ -44,5 +44,8 @@ if __name__ == "__main__":
     ax.set_xlabel("Number of mesh elements")
     ax.set_ylabel("Lift Coefficient")
     fig.savefig("Cl_conv.png")
+    
+    print("\n", coeffs[-4:,2])
+    print(coeffs[-4:,2].mean(), coeffs[-4:,2].std())
 
     

@@ -17,7 +17,7 @@ def order_coords(coords):
 
     return coords[phi.argsort()]
 
-def mesh_airfoil(airfoilpath, writepath,mesh_controls, 
+def mesh_airfoil(airfoilpath, writepath, angleofattack, mesh_controls, 
             chord_length=1, span=0.1):
     
     gmsh.initialize()
@@ -25,10 +25,14 @@ def mesh_airfoil(airfoilpath, writepath,mesh_controls,
 
     #domain parameters
 
+    angle = np.pi*angleofattack/180
+    RM = np.array([[np.cos(angle),-np.sin(angle)],
+                   [np.sin(angle), np.cos(angle)]])
     #airfoildata read 
     airfoildata = chord_length*np.loadtxt(airfoilpath, delimiter=',') # example: airfoilpath -> "./mesh/NRELs826.txt"
-    airfoildata = airfoildata
+    airfoildata = airfoildata @ RM
     AFcentroid = np.mean(airfoildata, axis=0)
+
 
     spline = sint.splprep(airfoildata.T, s=0.0, k=2)
     t = np.linspace(0, 1, 1000)

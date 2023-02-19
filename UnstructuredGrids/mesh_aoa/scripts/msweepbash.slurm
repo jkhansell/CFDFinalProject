@@ -3,12 +3,13 @@
 #SBATCH --job-name=OFmeshsweep
 #SBATCH --partition=nu
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=64
+#SBATCH --ntasks-per-node=20
 #SBATCH --time=15:00:00
 #SBATCH --output=output_%j.out
 #SBATCH --error=output_%j.err
 #SBATCH --mail-user=jovillalobos@cenat.ac.cr
 #SBATCH --mail-type=END,FAIL
+#SBATCH --nodelist=nu-7b.cnca
 
 rm -r ../meshsweep
 mkdir ../meshsweep
@@ -23,7 +24,7 @@ do
                                     --Tu 0.94\
                                     --nu 1.1516e-5\
                                     --nuratio .1\
-                                    --aoa 0.0\
+                                    --aoa 4.0\
                                     --c 1\
                                     --s 0.001\
                                     --rho 1.18\

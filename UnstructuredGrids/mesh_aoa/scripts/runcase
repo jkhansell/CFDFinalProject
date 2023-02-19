@@ -7,11 +7,11 @@ python3 runcase_unstructured.py  --scheme   "steady"                   \
                                 --Tu       0.2                      \
                                 --nu       1.1516e-5                  \
                                 --nuratio  0.1                        \
-                                --aoa      0.0                     \
+                                --aoa      5.0                     \
                                 --c        0.1                          \
                                 --s        0.01                      \
                                 --rho      1.18                       \
                                 --nsteps   4000                       \
                                 --airfoil  "../../../airfoils/NRELs826.txt"  \
                                 --savepath "../runs/"                      \
-                                --meshcontrols "meshcontrols/Mesh9.json"  \
+                                --meshcontrols "meshcontrols/Mesh1.json"  \

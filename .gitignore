@@ -4,6 +4,7 @@ meshstudy/meshsweep*
 *.err
 *.out
 *meshsweep*
+*aoasweep*
 *runs*
 *__pycache__/
 *.ipynb_checkpoints

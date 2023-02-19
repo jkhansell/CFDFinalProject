@@ -45,7 +45,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     # Mesh airfoil 
 
     writepath = os.path.join(case.name,"airfoil.msh")
-    airfoilmesh2.mesh_airfoil(airfoilpath, writepath, 
+    airfoilmesh2.mesh_airfoil(airfoilpath, writepath, aoa,  
                     chord_length=chord_length, span=span, mesh_controls=mesh_controls)
 
     cwd = os.getcwd()
@@ -73,7 +73,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
 
     controlDict = ParsedParameterFile(os.path.join(case.name, "system", "controlDict"))
     aoa = aoa*np.pi/180
-    UFile["internalField"].setUniform(Vector(U*np.cos(aoa),U*np.sin(aoa),0))
+    UFile["internalField"].setUniform(Vector(U,0,0))
     ReThetatFile["internalField"].setUniform(Rethetat(Tu))
     omegaFile["omega_bound"] = omega
     kFile["kbound"] = k
@@ -113,7 +113,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     os.system("decomposePar")   
         
     if tScheme == "steady":
-        os.system("mpirun -np 32 simpleFoam > log.airfoil -parallel")
+        os.system("mpirun -np 20 simpleFoam > log.airfoil -parallel")
     else:
         os.system("mpirun -np 4 pimpleFoam > log.airfoil -parallel")
     os.system("reconstructPar") 
