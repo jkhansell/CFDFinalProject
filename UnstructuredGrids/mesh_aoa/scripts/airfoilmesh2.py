@@ -34,7 +34,6 @@ def mesh_airfoil(airfoilpath, writepath, angleofattack, mesh_controls,
     #airfoildata = airfoildata @ RM
     AFcentroid = np.mean(airfoildata, axis=0)
 
-
     spline = sint.splprep(airfoildata.T, s=0.0, k=2)
     t = np.linspace(0, 1, 1000)
     coords = np.array(sint.splev(t, spline[0], der=0)).T
@@ -49,7 +48,7 @@ def mesh_airfoil(airfoilpath, writepath, angleofattack, mesh_controls,
     #spline interpolation of curve
     spl = gmsh.model.occ.addSpline(tags, 1)
     airfoilloop = gmsh.model.occ.addCurveLoop([spl])
-    gmsh.model.occ.mesh.setSize(gmsh.model.occ.getEntities(0), 
+    gmsh.model.occ.mesh.setSize(gmsh.model.occ.getEntities(0),
         mesh_controls["generalMesh"]["setSize"]*chord_length)
     #rectangle domain specification
     p1 = gmsh.model.occ.addPoint(AFcentroid[0]-15*chord_length, AFcentroid[1]-15*chord_length,0.0)
@@ -131,7 +130,6 @@ def mesh_airfoil(airfoilpath, writepath, angleofattack, mesh_controls,
     gmsh.model.mesh.generate(3)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.)
     gmsh.write(writepath)
-
     gmsh.finalize()
 
 if __name__ == "__main__":
@@ -169,5 +167,5 @@ if __name__ == "__main__":
     with open(args.meshcontrols) as meshfile: 
         meshcontrols = json.load(meshfile)
 
-    mesh_airfoil(args.airfoil, args.writepath, meshcontrols,
+    mesh_airfoil(args.airfoil, args.writepath, args.AoA, meshcontrols,
                     args.c, args.s)

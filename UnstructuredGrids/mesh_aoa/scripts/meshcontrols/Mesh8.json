@@ -5,7 +5,7 @@
         "setSize": 0.001,
         "SizeMin": 0.006,
         "SizeMax": 0.35,
-        "DistMin": 0.45, 
+        "DistMin": 0.1, 
         "DistMax": 10
     }
 }
