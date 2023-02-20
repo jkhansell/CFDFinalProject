@@ -24,13 +24,14 @@ def mesh_airfoil(airfoilpath, writepath, angleofattack, mesh_controls,
     gmsh.model.add("airfoil")
 
     #domain parameters
-
-    angle = np.pi*angleofattack/180
-    RM = np.array([[np.cos(angle),-np.sin(angle)],
-                   [np.sin(angle), np.cos(angle)]])
+    """
+        angle = np.pi*angleofattack/180
+        RM = np.array([[np.cos(angle),-np.sin(angle)],
+                [np.sin(angle), np.cos(angle)]])
+    """
     #airfoildata read 
     airfoildata = chord_length*np.loadtxt(airfoilpath, delimiter=',') # example: airfoilpath -> "./mesh/NRELs826.txt"
-    airfoildata = airfoildata @ RM
+    #airfoildata = airfoildata @ RM
     AFcentroid = np.mean(airfoildata, axis=0)
 
 

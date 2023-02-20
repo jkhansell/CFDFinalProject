@@ -73,7 +73,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
 
     controlDict = ParsedParameterFile(os.path.join(case.name, "system", "controlDict"))
     aoa = aoa*np.pi/180
-    UFile["internalField"].setUniform(Vector(U,0,0))
+    UFile["internalField"].setUniform(Vector(U*np.cos(aoa), U*np.sin(aoa) ,0))
     ReThetatFile["internalField"].setUniform(Rethetat(Tu))
     omegaFile["omega_bound"] = omega
     kFile["kbound"] = k

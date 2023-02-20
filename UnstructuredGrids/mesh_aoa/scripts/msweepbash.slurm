@@ -21,10 +21,10 @@ do
     echo
     python3 runcase_unstructured.py --scheme "steady"\
                                     --Reynolds 1e5\
-                                    --Tu 0.94\
+                                    --Tu 0.22\
                                     --nu 1.1516e-5\
                                     --nuratio .1\
-                                    --aoa 4.0\
+                                    --aoa 0.0\
                                     --c 1\
                                     --s 0.001\
                                     --rho 1.18\
