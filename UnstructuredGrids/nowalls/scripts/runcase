@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo 'Running Simulation'
+echo
+
+# from Mesh0.json to Mesh9.json use 4000 steps to reach stabilization
+# after those use 4500 steps
+python3 runcase_unstructured.py  --scheme   "steady"                   \
+                                --Reynolds 4e5                        \
+                                --Tu       0.31                      \
+                                --nu       1.1516e-5                  \
+                                --nuratio  0.1                        \
+                                --aoa      0.0                     \
+                                --c        0.45                        \
+                                --s        0.001                      \
+                                --rho      1.18                       \
+                                --nsteps   4500                       \
+                                --airfoil  "../../../airfoils/NRELs826.txt"  \
+                                --savepath "../runs/"                      \
+                                --meshcontrols "meshcontrols/Mesh11.json"  \

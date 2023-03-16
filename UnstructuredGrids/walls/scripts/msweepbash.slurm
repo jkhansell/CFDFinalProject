@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#SBATCH --job-name=OFmeshsweep
+#SBATCH --partition=nu
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=20
+#SBATCH --time=15:00:00
+#SBATCH --output=output_%j.out
+#SBATCH --error=output_%j.err
+#SBATCH --mail-user=jovillalobos@cenat.ac.cr
+#SBATCH --mail-type=END,FAIL
+#SBATCH --nodelist=nu-7b.cnca
+
+rm -r ../meshsweep
+mkdir ../meshsweep
+
+for file in `ls ./meshcontrols`
+do
+    echo Building $file directory file.
+    echo 
+    echo
+    python3 runcase_unstructured.py --scheme "steady"\
+                                    --Reynolds 4e5\
+                                    --Tu 0.31\
+                                    --nu 1.1516e-5\
+                                    --nuratio .1\
+                                    --aoa 0.0\
+                                    --c 0.45\
+                                    --s 0.001\
+                                    --rho 1.18\
+                                    --nsteps 4500\
+                                    --airfoil  "../../../airfoils/NRELs826.txt"\
+                                    --savepath "../meshsweep/"\
+                                    --meshcontrols ./meshcontrols/$file    
+    echo ------------------------------------------
+done

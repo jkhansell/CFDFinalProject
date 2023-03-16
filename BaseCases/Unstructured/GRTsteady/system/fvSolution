@@ -73,13 +73,13 @@ relaxationFactors
     equations
     {
         
-        U               0.7;
-        k               0.05;            //low value 0.01
-        omega           0.05;            //low value 0.01
-        ReThetat        0.7; 
-        gammaInt        0.7;
+        // U               0.7;
+        // k               0.7;            //low value 0.01
+        // omega           0.7;            //low value 0.01
+        // ReThetat        0.7; 
+        // gammaInt        0.7;
         
-        //".*"            0.5;
+        ".*"            0.7;
     }
 
 }
