@@ -67,7 +67,7 @@ relaxationFactors
 {
     fields
     {
-        p               0.3;
+        p               0.35;
     }
 
     equations
@@ -79,7 +79,7 @@ relaxationFactors
         // ReThetat        0.7; 
         // gammaInt        0.7;
         
-        ".*"            0.7;
+        ".*"            0.65;
     }
 
 }

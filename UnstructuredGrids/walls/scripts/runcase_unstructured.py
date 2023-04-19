@@ -27,10 +27,10 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     # Physical variables setup
 
     U = Re*nu/chord_length
-    k = 3/2*((Tu/100)*U)**2
+    k = 3/2*((Tu/100)*U)**2 
 
-    #omega = k**0.5/0.09**0.25/chord_length 
-    omega = rhoInf*k/nu*nuratio**-1  
+    omega = k**0.5/0.09**0.25/chord_length 
+    #omega = rhoInf*k/nu*nuratio**-1  
     gammaInt = 1
 
     # Case setup OpenFOAM
@@ -72,13 +72,13 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     nuFile2 = ParsedParameterFile(os.path.join(case.name,"constant","transportProperties"))
 
     controlDict = ParsedParameterFile(os.path.join(case.name, "system", "controlDict"))
+
     aoa = aoa*np.pi/180
     UFile["internalField"].setUniform(Vector(U, 0, 0))
     ReThetatFile["internalField"].setUniform(Rethetat(Tu))
     omegaFile["omega_bound"] = omega
     kFile["kbound"] = k
     gammaIntFile["internalField"].setUniform(gammaInt)
-    #nutFile["internalField"].setUniform(nu*nuratio)
 
     nuFile1["nu"][2] = nu
     nuFile2["nu"][1] = nu
@@ -102,6 +102,8 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
 
     controlDict.writeFile()
 
+    decomposePar = ParsedParameterFile(os.path.join(case.name, "system", "decomposeParDict"))
+    nP = int(decomposePar["numberOfSubdomains"])
 
     #Run parallel simulation from python
     
@@ -113,7 +115,7 @@ def GRTairfoilsim(tScheme, Re, Tu, nu, nuratio, aoa,
     os.system("decomposePar")   
         
     if tScheme == "steady":
-        os.system("mpirun -np 4 simpleFoam > log.airfoil -parallel")
+        os.system("mpirun -np "+str(nP)+" simpleFoam > log.airfoil -parallel")
     else:
         os.system("mpirun -np 4 pimpleFoam > log.airfoil -parallel")
     os.system("reconstructPar") 

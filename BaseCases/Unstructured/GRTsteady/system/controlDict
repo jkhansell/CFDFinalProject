@@ -111,6 +111,14 @@ functions
         writeInterval $time;
     }
 
+    
+    yplus1
+    {
+        type        yPlus;
+        libs        ("libfieldFunctionObjects.so");
+        writeControl timeStep;
+        writeInterval $time;
+    }
 }
 
 // ************************************************************************* //

@@ -19,7 +19,7 @@ def get_meshsweep_data(sweepdir):
             sizes[i] = float(lines[30][10:])
             f.close()
         coefs = np.loadtxt("postProcessing/forceCoeffs/0/forceCoeffs.dat", skiprows=9 , delimiter="\t")
-        coefficients[i,1:] = np.mean(coefs[-100:,2:4], axis=0)
+        coefficients[i,1:] = np.mean(coefs[-300:,2:4], axis=0)
         os.chdir(cwd)
     return sorted(files),sizes, coefficients
 
@@ -29,12 +29,6 @@ if __name__ == "__main__":
     
     except (IndexError, ValueError) :
         raise SystemExit
-    
-    
-    plt.rcParams.update({
-        'text.usetex': True,
-        'figure.dpi': 150
-    })
     
     
     files, sizes, coeffs = get_meshsweep_data(sweepdir)
@@ -52,8 +46,7 @@ if __name__ == "__main__":
 
     ax.scatter(coeffs[:,0], coeffs[:,1])
     ax.grid()
-    ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",
-                    fontsize=15)
+    #ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",fontsize=15)
     ax.ticklabel_format(axis="x", style="sci", scilimits=(1,2))
     ax.tick_params(axis='both', which='major', labelsize=15)
     ax.set_ylim(0.0, 0.03)
@@ -65,8 +58,7 @@ if __name__ == "__main__":
 
     ax.scatter(coeffs[:,0], coeffs[:,2])
     ax.grid()
-    ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",
-                    fontsize=15)
+    #ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",fontsize=15)
     ax.ticklabel_format(axis="x", style="sci", scilimits=(1,2))
     ax.tick_params(axis='both', which='major', labelsize=15)
     ax.set_ylim(0.3, 0.8)

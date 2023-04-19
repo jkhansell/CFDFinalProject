@@ -9,7 +9,7 @@ do
     echo 
     echo
     python3 runcase_unstructured.py --scheme "steady"\
-                                    --Reynolds 4e5\
+                                    --Reynolds e5\
                                     --Tu 0.31\
                                     --nu 1.1516e-5\
                                     --nuratio .1\

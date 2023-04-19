@@ -20,7 +20,7 @@ RAS
     model               kOmegaSSTLM;
     turbulence          on;
     printCoeffs         on;
-    //F3                  on;
+    //F3                on;
 }
 
 
