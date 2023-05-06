@@ -30,41 +30,52 @@ if __name__ == "__main__":
     except (IndexError, ValueError) :
         raise SystemExit
     
+    plt.rcParams.update({
+    'text.usetex': True,
+    'figure.dpi': 150
+    })
+    plt.tight_layout()
     
     files, sizes, coeffs = get_meshsweep_data(sweepdir)
     
     fig, ax = plt.subplots()
+    ax.grid()
+    ax.set_axisbelow(True)
+
     ax.plot(sizes[sizes.argsort()], marker=".")
-    ax.set_xlabel("Case")
     ax.set_ylabel("Number of mesh elements")
-    ax.set_xticks(range(0,len(files)), np.array(files)[sizes.argsort()], rotation=50)
-    fig.savefig("meshsizes.png")
+    ax.set_xticks(range(0,len(files)), np.array([x.replace("GRTsteady0","") for x in files])[sizes.argsort()])
+    fig.savefig("meshsizes.svg")
 
     fig, ax = plt.subplots(figsize=(7,6), dpi=130)
+    ax.grid()
+    ax.set_axisbelow(True)
+    
+    fig.subplots_adjust(left=0.15)
 
     coeffs = coeffs[sizes.argsort()] 
-
     ax.scatter(coeffs[:,0], coeffs[:,1])
-    ax.grid()
+    
     #ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",fontsize=15)
     ax.ticklabel_format(axis="x", style="sci", scilimits=(1,2))
-    ax.tick_params(axis='both', which='major', labelsize=15)
+    ax.tick_params(axis='both', which='major', labelsize=17)
     ax.set_ylim(0.0, 0.03)
-    ax.set_xlabel("Number of mesh elements", fontsize=15)
-    ax.set_ylabel(r"$C_d$", fontsize=15)
-    fig.savefig("Cd_conv.png")
+    ax.set_xlabel("Number of mesh elements", fontsize=17)
+    ax.set_ylabel(r"$C_d$", fontsize=17)
+    fig.savefig("Cd_conv.svg")
     
     fig, ax = plt.subplots(figsize=(7,6), dpi=130)
+    ax.grid()
+    ax.set_axisbelow(True)
 
     ax.scatter(coeffs[:,0], coeffs[:,2])
-    ax.grid()
     #ax.set_title(r"Mesh convergence graph for NRELs826 airfoil at $\theta = 0.0^{\circ}$",fontsize=15)
     ax.ticklabel_format(axis="x", style="sci", scilimits=(1,2))
-    ax.tick_params(axis='both', which='major', labelsize=15)
+    ax.tick_params(axis='both', which='major', labelsize=17)
     ax.set_ylim(0.3, 0.8)
-    ax.set_xlabel("Number of mesh elements", fontsize=15)
-    ax.set_ylabel(r"$C_l$", fontsize=15)
-    fig.savefig("Cl_conv.png")
+    ax.set_xlabel("Number of mesh elements", fontsize=17)
+    ax.set_ylabel(r"$C_l$", fontsize=17)
+    fig.savefig("Cl_conv.svg")
 
 
     print("\n", coeffs[-4:,2])

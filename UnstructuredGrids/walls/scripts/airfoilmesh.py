@@ -120,15 +120,14 @@ def mesh_airfoil(airfoilpath, angleofattack, writepath,
     gmsh.model.mesh.field.setNumber(6, "Thickness", 2)
     
     
-    
     f = gmsh.model.mesh.field.add('BoundaryLayer')
-    gmsh.model.mesh.field.setNumbers(f, 'CurvesList', [l3,])
-    gmsh.model.mesh.field.setNumber(f, 'Size', mesh_controls["boundaryLayer"]["Size"]*chord_length)
-    gmsh.model.mesh.field.setNumber(f, 'Ratio',mesh_controls["boundaryLayer"]["Ratio"])
+    gmsh.model.mesh.field.setNumbers(f, 'CurvesList', [airfoilloop,])
+    gmsh.model.mesh.field.setNumber(f, 'Size', 0.001)
+    gmsh.model.mesh.field.setNumber(f, 'Ratio', 1.01)
     gmsh.model.mesh.field.setNumber(f, 'Quads', 1)
-    gmsh.model.mesh.field.setNumber(f, 'Thickness', mesh_controls["boundaryLayer"]["Thickness"]*chord_length)
-    #gmsh.option.setNumber('Mesh.BoundaryLayerFanElements', mesh_controls["boundaryLayer"]["NElements"])
-    #gmsh.model.mesh.field.setNumbers(f, 'FanPointsList', [tags[-1]])
+    gmsh.model.mesh.field.setNumber(f, 'Thickness', 0.01)
+    gmsh.option.setNumber('Mesh.BoundaryLayerFanElements', 25)
+    gmsh.model.mesh.field.setNumbers(f, 'FanPointsList', [tags[-1]])
     gmsh.model.mesh.field.setAsBoundaryLayer(f)
     
     """

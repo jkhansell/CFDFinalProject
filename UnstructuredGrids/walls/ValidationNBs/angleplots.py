@@ -39,13 +39,13 @@ if __name__ == "__main__":
     except (IndexError, ValueError):
         raise SystemExit
     
-    """
+    
     plt.rcParams.update({
         'text.usetex': True,
-        'figure.dpi': 150
-    })
-    """
-
+        'figure.dpi': 150})
+    
+    plt.tight_layout()
+    
     # Get experimental data from table
     
     cl_data = pd.read_csv("./data/Cl_data.csv")
@@ -56,7 +56,6 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(figsize=(7,6), dpi=130)
     ax.grid()
     #ax.set_title("Lift coefficient vs angle of attack")
-    ax.plot(cl_data["aoa"], cl_data["400k"], marker=".", label="Experiment (Bartl, Sagmo, Bracchi, Sætran)")
     ax.plot(angles, coefs[:,2], marker=".", label=r"$\gamma-Re_\theta$  SST simulation")
     ax.set_xlabel("Angle of attack $[^\circ]$", fontsize=15)
     ax.set_ylabel(r"$C_l\quad[-]$", fontsize=15)
@@ -67,15 +66,9 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(figsize=(7,6), dpi=130)
     ax.grid()
     #ax.set_title("Lift coefficient vs angle of attack")
-    ax.plot(cd_data["aoa"], cd_data["400k"], marker=".", label="Experiment (Bartl, Sagmo, Bracchi, Sætran)")
     ax.plot(angles, coefs[:,1], marker=".", label=r"$\gamma-Re_\theta$ SST simulation")
     ax.set_xlabel("Angle of attack $[^\circ]$", fontsize=15)
     ax.set_ylabel(r"$C_d\quad[-]$", fontsize=15)
     ax.legend()
     
     fig.savefig("AoA_Cd.png")
-
-    ind = np.where(np.isin(cl_data["aoa"], angles))
-    clexp = np.array(cl_data["400k"])[ind]
-    cdexp = np.array(cd_data["400k"])[ind]
-    

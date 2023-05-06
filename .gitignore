@@ -11,3 +11,4 @@ meshstudy/meshsweep*
 *.code-workspace
 airfoil2D/
 *.png
+*resultsFolder/

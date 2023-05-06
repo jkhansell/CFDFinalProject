@@ -1,0 +1,8 @@
+#!/bin/sh
+
+python3 airfoilmesh.py --airfoil "../../../airfoils/sg6043mod1.txt" \
+                       --AoA 0.0                              \
+                       --writepath "./airfoil.msh"             \
+                       --c 1  \
+                       --s 0.01 \
+                       --meshcontrols "meshcontrols/Mesh8.json"\

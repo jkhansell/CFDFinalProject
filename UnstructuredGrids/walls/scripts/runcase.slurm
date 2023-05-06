@@ -10,13 +10,13 @@
 #SBATCH --mail-user=jovillalobos@cenat.ac.cr
 #SBATCH --mail-type=END,FAIL
 
-cd $SLURM_SUBMIT_DIR 
+#cd $SLURM_SUBMIT_DIR 
 
-source /home/jovillalobos/.bashrc
-conda activate OFgmsh
+#source /home/jovillalobos/.bashrc
+#conda activate OFgmsh
 
 python3 runcase_unstructured.py --scheme                                "steady"    \
-                                --Reynolds                              4e5         \
+                                --Reynolds                              1e5         \
                                 --Tu                                    0.31        \
                                 --nu                                    1.516e-5    \
                                 --nuratio                               0.1         \
@@ -24,7 +24,7 @@ python3 runcase_unstructured.py --scheme                                "steady"
                                 --c                                     0.45        \
                                 --s                                     0.001       \
                                 --rho                                   1.18        \
-                                --nsteps                                5000        \
-                                --airfoil  "../../../airfoils/NRELs826.txt"         \
-                                --savepath "../aoasweep/"                           \
-                                --meshcontrols "meshcontrols/Mesh8.json"            \
+                                --nsteps                                4500        \
+                                --airfoil  "../../../airfoils/SG6043.txt"         \
+                                --savepath "../runs/"                           \
+                                --meshcontrols "meshcontrols/Mesh5.json"            \
