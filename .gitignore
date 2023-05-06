@@ -10,5 +10,8 @@ meshstudy/meshsweep*
 *.ipynb_checkpoints
 *.code-workspace
 airfoil2D/
-*.png
+*.png*
+*results*
 *resultsFolder/
+*.svg*
+*.json*
