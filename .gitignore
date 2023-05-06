@@ -1,0 +1,17 @@
+meshstudy/meshsweep2500steps
+meshstudy/meshsweep3000steps
+meshstudy/meshsweep*
+*.err
+*.out
+*meshsweep*
+*aoasweep*
+*runs*
+*__pycache__/
+*.ipynb_checkpoints
+*.code-workspace
+airfoil2D/
+*.png*
+*results*
+*resultsFolder/
+*.svg*
+*.json*

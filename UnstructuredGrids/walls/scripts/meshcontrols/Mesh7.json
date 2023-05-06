@@ -1,0 +1,11 @@
+{
+    "name": "Mesh7",
+    "generalMesh": 
+    {
+        "setSize": 0.0015,
+        "SizeMin": 0.0045,
+        "SizeMax": 0.65,
+        "DistMin": 0.1, 
+        "DistMax": 8
+    }
+}
