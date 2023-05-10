@@ -10,10 +10,10 @@
 #SBATCH --mail-user=jovillalobos@cenat.ac.cr
 #SBATCH --mail-type=END,FAIL
 
-#cd $SLURM_SUBMIT_DIR 
+cd $SLURM_SUBMIT_DIR 
 
-#source /home/jovillalobos/.bashrc
-#conda activate OFgmsh
+source /home/jovillalobos/conda_activate
+conda activate OFgmsh
 
 python3 runcase_unstructured.py --scheme                                "steady"    \
                                 --Reynolds                              1e5         \
