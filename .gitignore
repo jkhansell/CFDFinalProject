@@ -12,3 +12,5 @@ meshstudy/meshsweep*
 airfoil2D/
 *.png
 *resultsFolder/
+*-6anglessweep
+*-8anglessweep

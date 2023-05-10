@@ -47,50 +47,51 @@ def get_coefficients(resultsdir):
     ax2.set_axisbelow(True)
     fig3, ax3 = plt.subplots(figsize=(7,5), dpi=150)
     ax3.set_axisbelow(True)
-    
 
     for i, sweepdir in enumerate(sorted(os.listdir(resultsdir))):
 
-        if sweepdir != "aoasweep0":
-            os.chdir(os.path.join(resultsdir, sweepdir))
-            _, coef, angles = getsweepdata(os.getcwd())
+        os.chdir(os.path.join(resultsdir, sweepdir))
+        _, coef, angles = getsweepdata(os.getcwd())
+        angles = angles[angles!=-6.]
+        angles = angles[angles!=-8.]
+        coef = coef[2:-2]
 
-            coef = coef[1:-2]
+        airdict["mod"+str(i)+"lift"] = coef[:,2]
+        airdict["mod"+str(i)+"drag"] = coef[:,1]
 
-            airdict["mod"+str(i)+"lift"] = coef[:,2]
-            airdict["mod"+str(i)+"drag"] = coef[:,1]
+        ax1.plot(angles, coef[:, 1], marker='.', label='SG6043 mod'+str(i))
+        ax1.set_ylabel(r"$C_\mathrm{drag}$")
+        ax1.set_xlabel(r"Angle of attack $[^\circ]$")
+        ax2.plot(angles, coef[:, 2], marker='.', label='SG6043 mod'+str(i))
+        ax2.set_ylabel(r"$C_\mathrm{lift}$")
+        ax2.set_xlabel(r"Angle of attack $[^\circ]$")
+        ax3.plot(angles, coef[:,2]/coef[:,1], marker='.', label='SG6043 mod'+str(i))
+        ax3.set_ylabel(r"$C_\mathrm{lift}/C_\mathrm{drag}$")
+        ax3.set_xlabel(r"Angle of attack $[^\circ]$")
+        os.chdir(cwd)
+    """
+    else: 
+        print(i)
+        os.chdir(os.path.join(resultsdir, sweepdir))
+        _, coef, angles = getsweepdata(os.getcwd())
+        angles = angles[angles!=-6.]
 
-            ax1.plot(angles, coef[:, 1], marker='.', label='SG6043 mod'+str(i))
-            ax1.set_ylabel(r"$C_\mathrm{drag}$")
-            ax1.set_xlabel(r"Angle of attack $[^\circ]$")
-            ax2.plot(angles, coef[:, 2], marker='.', label='SG6043 mod'+str(i))
-            ax2.set_ylabel(r"$C_\mathrm{lift}$")
-            ax2.set_xlabel(r"Angle of attack $[^\circ]$")
-            ax3.plot(angles, coef[:,2]/coef[:,1], marker='.', label='SG6043 mod'+str(i))
-            ax3.set_ylabel(r"$C_\mathrm{lift}/C_\mathrm{drag}$")
-            ax3.set_xlabel(r"Angle of attack $[^\circ]$")
-            os.chdir(cwd)
-        else: 
-            os.chdir(os.path.join(resultsdir, sweepdir))
-            _, coef, angles = getsweepdata(os.getcwd())
-            angles = angles[angles!=-6.]
-            coef = coef[1:-2]
+        coef = coef[1:-2]
+        airdict["mod"+str(i)+"lift"] = coef[:,2].tolist().append(0.)
+        airdict["mod"+str(i)+"drag"] = coef[:,1].tolist().append(0.)
+        
 
-            airdict["mod"+str(i)+"lift"] = coef[:,2].tolist().append(0)
-            airdict["mod"+str(i)+"drag"] = coef[:,1].tolist().append(0)
-
-            ax1.plot(angles, coef[:, 1], marker='.', label='SG6043 mod'+str(i))
-            ax1.set_ylabel(r"$C_\mathrm{drag}$")
-            ax1.set_xlabel(r"Angle of attack $[^\circ]$")
-            ax2.plot(angles, coef[:, 2], marker='.', label='SG6043 mod'+str(i))
-            ax2.set_ylabel(r"$C_\mathrm{lift}$")
-            ax2.set_xlabel(r"Angle of attack $[^\circ]$")
-            ax3.plot(angles, coef[:,2]/coef[:,1], marker='.', label='SG6043 mod'+str(i))
-            ax3.set_ylabel(r"$C_\mathrm{lift}/C_\mathrm{drag}$")
-            ax3.set_xlabel(r"Angle of attack $[^\circ]$")
-            os.chdir(cwd)
-
-
+        ax1.plot(angles, coef[:, 1], marker='.', label='SG6043 mod'+str(i))
+        ax1.set_ylabel(r"$C_\mathrm{drag}$")
+        ax1.set_xlabel(r"Angle of attack $[^\circ]$")
+        ax2.plot(angles, coef[:,2], marker='.', label='SG6043 mod'+str(i))
+        ax2.set_ylabel(r"$C_\mathrm{lift}$")
+        ax2.set_xlabel(r"Angle of attack $[^\circ]$")
+        ax3.plot(angles, coef[:,2]/coef[:,1], marker='.', label='SG6043 mod'+str(i))
+        ax3.set_ylabel(r"$C_\mathrm{lift}/C_\mathrm{drag}$")
+        ax3.set_xlabel(r"Angle of attack $[^\circ]$")
+        os.chdir(cwd)
+    """
 
     box1 = ax1.get_position()
     ax1.set_position([box1.x0, box1.y0, box1.width * 0.8, box1.height])
@@ -118,8 +119,7 @@ def get_coefficients(resultsdir):
     fig3.savefig("modifiedliftdragratio.svg")
     
     p = pd.DataFrame(airdict)
-    p.to_csv("coefs.csv")
-
+    p.to_csv("coefs.csv", float_format="%.4f")
 
 if __name__ == "__main__":
 

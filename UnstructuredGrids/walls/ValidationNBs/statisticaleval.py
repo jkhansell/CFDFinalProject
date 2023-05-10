@@ -7,13 +7,7 @@ from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
 
 def analysis_SD_airfoils(CoefCSV):
-    2
-
-
     
-
-
-"""
     airfoils = ['A' + str(i) for i in range(1, n_airfoils+1)]
     angles = ['B' + str(i) for i in range(1, n_angles+1)]
 
@@ -57,4 +51,3 @@ def analysis_SD_airfoils(CoefCSV):
     ax.set_ylabel('Airfoil')
     ax.set_title('Tukey HSD Test Results')
     plt.show()
-"""
